@@ -1,29 +1,42 @@
 <!DOCTYPE html>
-<html lang="en">
-
+<html lang="es">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title> My "To Do" List</title>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Lista de Tareas Moderna</title>
+  <link rel="stylesheet" href="todolist.css" />
   <script defer src="todolist.js"></script>
-    <link rel="stylesheet" href="todolist.css">
 </head>
-
 <body>
+  <div class="todo-container">
+    <div class="todo-header">
+      <div class="tabs">
+        <button type="button" class="tab active" id="tab-sinCompletar" onclick="mostrarTab('sinCompletar')">Sin Completar</button>
+        <button type="button" class="tab" id="tab-completada" onclick="mostrarTab('completada')">Completadas</button>
+      </div>
+      <button type="button" class="add-btn" onclick="nuevoItem()">+</button>
+    </div>
 
-  <div id="toDo-app" class="header">
-    <h2>Mi lista de Tareas</h2>
-    <input type="text" id="toDo-input" placeholder="Ingresar una nueva tarea: ">
-    <label for="prioridad-input">Nivel de prioridad</label>
-      <input type="number" id="prioridad-input" name="Prioridad" min="1" max="5" placeholder="Ingrese el nivel de prioridad" required>
-    </select>
-    <span onclick="nuevoItem()" class="addBtn">Agregar</span>
+    <div class="input-area">
+      <input type="text" id="toDo-input" placeholder="Nueva tarea..." />
+      <select id="prioridad-input" aria-label="Prioridad">
+        <option value="" disabled selected>Prioridad</option>
+        <option value="1">1 - Muy baja</option>
+        <option value="2">2 - Baja</option>
+        <option value="3">3 - Media</option>
+        <option value="4">4 - Alta</option>
+        <option value="5">5 - Muy alta</option>
+      </select>
+      <button type="button" onclick="ordenarLista('prioridad')" class="orden-btn">Ordenar por Prioridad</button>
+      <button type="button" onclick="ordenarLista('fechaModificacion')" class="orden-btn">Ordenar por Fecha</button>
+    </div>
+
+    <ul class="todo-list" id="todo-list-sinCompletar"></ul>
+    <ul class="todo-list" id="todo-list-completada"></ul>
+
+    <div id="info-editar">
+      Para modificar una tarea, haga <strong>doble clic</strong> sobre ella.
+    </div>
   </div>
-
-  <ul id="toDo-ul">
-
-  </ul>
-
 </body>
-
 </html>

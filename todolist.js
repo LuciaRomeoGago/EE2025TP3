@@ -1,61 +1,123 @@
-/*Creo boton para eliminar en cada lista*/
-var lista = document.getElementsByTagName("li"); /*devuelve coleccion de elemtnos li del documento*/
-for (let i = 0; i < lista.length; i++) { /*se crea span y nodo de texto x y se le agrega a span cerrar, ambos al final de cada li*/
-  var span = document.createElement("span");
-  var txt = document.createTextNode("\u00D7");
-  span.className = "cerrar";
-  span.appendChild(txt);
-  lista[i].appendChild(span);
+// Lista de tareas, cada tarea es un objeto con texto, prioridad, fechas y completado
+let tareas = [];
+
+// Estado actual de pestaña: 'sinCompletar' o 'completada'
+let estadoActual = 'sinCompletar';
+
+// Función para renderizar las tareas en sus listas
+function renderizarTareas() {
+  const listaSinCompletar = document.getElementById('todo-list-sinCompletar');
+  const listaCompletada = document.getElementById('todo-list-completada');
+
+  listaSinCompletar.innerHTML = '';
+  listaCompletada.innerHTML = '';
+
+  tareas.forEach((tarea, idx) => {
+    const li = document.createElement('li');
+    li.className = 'todo-item' + (tarea.completada ? ' completada' : '');
+    li.setAttribute('data-prioridad', tarea.prioridad);
+    li.setAttribute('data-fechaModificacion', tarea.fechaModificacion);
+
+    // Checkbox
+    const checkbox = document.createElement('div');
+    checkbox.className = 'checkbox' + (tarea.completada ? ' checked' : '');
+    checkbox.onclick = (e) => {
+      e.stopPropagation(); // evitar toggle tachado al hacer click en checkbox
+      tarea.completada = !tarea.completada;
+      tarea.fechaModificacion = new Date().toISOString();
+      renderizarTareas();
+    };
+    li.appendChild(checkbox);
+
+    // Texto
+    const texto = document.createElement('div');
+    texto.className = 'todo-text';
+    texto.textContent = tarea.texto + ' (Prioridad: ' + tarea.prioridad + ')';
+    li.appendChild(texto);
+
+    // Botón cerrar
+    const cerrar = document.createElement('span');
+    cerrar.className = 'cerrar';
+    cerrar.textContent = '\u00D7';
+    cerrar.onclick = (e) => {
+      e.stopPropagation();
+      tareas.splice(idx, 1);
+      renderizarTareas();
+    };
+    li.appendChild(cerrar);
+
+    // Doble clic para editar tarea
+    li.ondblclick = () => {
+      const nuevoTexto = prompt('Editar tarea:', tarea.texto);
+      if (nuevoTexto !== null && nuevoTexto.trim() !== '') {
+        tarea.texto = nuevoTexto.trim();
+        tarea.fechaModificacion = new Date().toISOString();
+        renderizarTareas();
+      }
+    };
+
+    // Añadir a la lista correcta
+    if (tarea.completada) {
+      listaCompletada.appendChild(li);
+    } else {
+      listaSinCompletar.appendChild(li);
+    }
+  });
 }
 
-// apretar cerrar boton para ocultar un item de la lista
-var cerrarIniciales = document.getElementsByClassName("cerrar");
-for (let i = 0; i < cerrarIniciales.length; i++) {
-  cerrarIniciales[i].onclick = function () {
-    var div = this.parentElement;
-    div.style.display = "none";
-  }
+// Cambiar pestaña
+function mostrarTab(tab) {
+  estadoActual = tab;
+  document.getElementById('todo-list-sinCompletar').style.display = tab === 'sinCompletar' ? '' : 'none';
+  document.getElementById('todo-list-completada').style.display = tab === 'completada' ? '' : 'none';
+  document.getElementById('tab-sinCompletar').classList.toggle('active', tab === 'sinCompletar');
+  document.getElementById('tab-completada').classList.toggle('active', tab === 'completada');
 }
 
-//anadir "un tick" cuando apreto en el item
-var listo = document.querySelector('ul');
-listo.addEventListener('click', function (ev) {
-  if (ev.target.tagName === 'LI') {
-    ev.target.classList.toggle('tachado');
-  }
-}, false);
-
-// creo un item nuevo cuando aprieto el boton de agregar
+// Añadir nueva tarea
 function nuevoItem() {
-  var li = document.createElement("li");
-  var inputValor = document.getElementById("toDo-input").value;
-  var prioridadValor = document.getElementById("prioridad-input").value;
-  var t = document.createTextNode(inputValor+ " (" + prioridadValor + ")");
-  li.appendChild(t);
-  if (inputValor === '') {
-    alert("Ingresar alguna tarea por hacer!");
-  } else {
-    document.getElementById("toDo-ul").appendChild(li);
+  const input = document.getElementById('toDo-input');
+  const prioridadSelect = document.getElementById('prioridad-input');
+  const texto = input.value.trim();
+  const prioridad = prioridadSelect.value;
+
+  if (!texto) {
+    alert('Por favor ingresa una tarea.');
+    return;
   }
-  document.getElementById("toDo-input").value = "";
+  if (!prioridad) {
+    alert('Por favor selecciona una prioridad.');
+    return;
+  }
 
-  var span = document.createElement("SPAN");
-  var txt = document.createTextNode("\u00D7");
-  span.className = "cerrar";
-  span.appendChild(txt);
-  li.appendChild(span);
+  const ahora = new Date().toISOString();
 
-  // Adjuntar el event listener al botón "cerrar" recién creado
-  span.onclick = function () {
-    var div = this.parentElement;
-    div.style.display = "none";
-  };
+  tareas.push({
+    texto: texto,
+    prioridad: parseInt(prioridad),
+    fechaCreacion: ahora,
+    fechaModificacion: ahora,
+    completada: false
+  });
+
+  // Limpiar inputs
+  input.value = '';
+  prioridadSelect.value = '';
+
+  renderizarTareas();
+  mostrarTab('sinCompletar');
 }
 
-function modificarItem(){
-
+// Ordenar lista
+function ordenarLista(criterio) {
+  if (criterio === 'prioridad') {
+    tareas.sort((a, b) => a.prioridad - b.prioridad);
+  } else if (criterio === 'fechaModificacion') {
+    tareas.sort((a, b) => new Date(a.fechaModificacion) - new Date(b.fechaModificacion));
+  }
+  renderizarTareas();
 }
 
-function listarPrioridades(){
-
-}
+// Inicializar
+mostrarTab('sinCompletar');
+renderizarTareas();

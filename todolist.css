@@ -1,127 +1,234 @@
-  body {
-        font-family: Arial, sans-serif;
-    background-color: #f4f4f4;
-    margin: 0;
-    padding: 20px;
-    }
-
-
-    ul {
-      margin: 0;
-      padding: 0;
-    }
-
-    ul li {
-      cursor: pointer;
-      position: relative;
-      padding: 12px 8px 12px 40px;
-      list-style-type: none;
-      background: #e9a4c6;
-      font-size: 18px;
-      transition: 0.2s;
-
-      /*hace que la lista de items sea unselectable*/
-      -webkit-user-select: none;
-      -moz-user-select: none;
-      -ms-user-select: none;
-      user-select: none;
-    }
-
-    /*hace que la lista  sea de otro color*/
-    ul li:nth-child(odd) {
-      background: #f9f9f9;
-    }
-
-    ul li:hover {
-      background: #ddd;
-    }
-
-    /*Se tacha y se cambia de color*/
-    ul li.tachado {
-      background: #888;
-      color: #fff;
-      text-decoration: line-through;
-    }
-
-    /*suma un tick cuando se clickea*/
-    ul li.tachado::before {
-      content: '';
-      position: absolute;
-      border-color: #fff;
-      border-style: solid;
-      border-width: 0 2px 2px 0;
-      top: 10px;
-      left: 16px;
-      transform: rotate(45deg);
-      height: 15px;
-      width: 7px;
-    }
-
-    
-    /* boton de cerrar */
-    .close {
-      position: absolute;
-      right: 0;
-      top: 0;
-      padding: 12px 16px 12px 16px;
-    }
-
-    .close:hover {
-      background-color: #b4165a;
-      color: white;
-    }
-
-    /* el header */
-    .header {
-      background-color: #fcb1ce;
-      padding: 30px 40px;
-      color: white;
-      text-align: center;
-    }
-
-    /* pseudoelemento, despues */
-    .header:after {
-      content: "";
-      display: table;
-      clear: both;
-    }
-
-    /* input */
-    input {
-      border: none;
-      border-radius: 5px;
-      width: 70%;
-      padding: 10px;
-    }
-
-    /*  prioridad */
-label[for="prioridad-input"] {
-  font-weight: bold;
-  margin-left: 10px;
-  margin-right: 5px;
-  white-space: nowrap;
+body {
+  background: #f4f4f4;
+  font-family: 'Segoe UI', Arial, sans-serif;
+  margin: 0;
+  padding: 0;
 }
 
-/*  prioridad */
-#prioridad-input {
-  width: 80px;
-  padding: 8px;
-  font-size: 16px;
-  border-radius: 5px;
+.todo-container {
+  background: #fff;
+  border-radius: 12px;
+  box-shadow: 0 4px 18px rgba(0,0,0,0.12);
+  max-width: 480px;
+  margin: 40px auto;
+  padding: 24px 24px 32px 24px;
+  box-sizing: border-box;
+}
+
+.todo-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 18px;
+}
+
+.tabs {
+  display: flex;
+  align-items: center;
+}
+
+.tab {
+  background: none;
+  border: none;
+  outline: none;
+  font-size: 1.1rem;
+  font-weight: 700;
+  color: #222;
+  margin-right: 24px;
+  padding-bottom: 4px;
+  cursor: pointer;
+  border-bottom: 3px solid transparent;
+  transition: color 0.2s, border-bottom 0.2s;
+}
+
+.tab.active {
+  color: #3c206c;
+  border-bottom: 3px solid #3c206c;
+}
+
+.add-btn {
+  background: #2ecc40;
+  border: none;
+  border-radius: 6px;
+  width: 38px;
+  height: 38px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  transition: background 0.2s;
+  box-shadow: 0 2px 6px rgba(44,204,64,0.15);
+  font-size: 2rem;
+  color: white;
+
+}
+.add-btn:hover {
+  background: #27ae60;
+}
+
+.input-area {
+  display: flex;
+  gap: 10px;
+  margin-bottom: 20px;
+  flex-wrap: wrap;
+  align-items: center;
+}
+
+.input-area input[type="text"] {
+  flex: 1 1 60%;
+  padding: 10px 14px;
+  border-radius: 6px;
   border: 1px solid #ccc;
-  text-align: center;
+  font-size: 1rem;
+  outline: none;
+  transition: border-color 0.3s ease;
 }
 
-    /* boton de anadir */
-    .addBtn {
-      padding: 10px;
-      background: #d9d9d9;
-      color: #555;
-      text-align: center;
-      cursor: pointer;
-      border-radius: 0;
-    }
+.input-area input[type="text"]:focus {
+  border-color: #3c206c;
+  box-shadow: 0 0 6px #b19cd9;
+}
 
-    .addBtn:hover {
-      background-color: #bbb;
-    }
+.input-area select {
+  flex: 1 1 30%;
+  padding: 10px 14px;
+  border-radius: 6px;
+  border: 1px solid #ccc;
+  font-size: 1rem;
+  cursor: pointer;
+  outline: none;
+  transition: border-color 0.3s ease;
+}
+
+.input-area select:focus {
+  border-color: #3c206c;
+  box-shadow: 0 0 6px #b19cd9;
+}
+
+.orden-btn {
+  flex: 1 1 100%;
+  background: #3c206c;
+  color: white;
+  border: none;
+  border-radius: 6px;
+  padding: 10px 14px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: background 0.3s ease;
+  margin-top: 6px;
+}
+
+.orden-btn:hover {
+  background: #5e3dbd;
+}
+
+.todo-list {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.todo-item {
+  display: flex;
+  align-items: center;
+  background: #fff;
+  border-radius: 8px;
+  box-shadow: 0 2px 8px rgba(60,32,108,0.08);
+  margin-bottom: 14px;
+  padding: 14px 18px;
+  transition: box-shadow 0.2s;
+  position: relative;
+  border: 1px solid #eee;
+  cursor: pointer;
+}
+
+.todo-item:hover {
+  box-shadow: 0 4px 12px rgba(60,32,108,0.15);
+}
+
+.todo-item.completed {
+  opacity: 0.6;
+  box-shadow: 0 6px 16px rgba(60,32,108,0.12);
+  text-decoration: line-through;
+  color: #777;
+}
+
+.checkbox {
+  width: 28px;
+  height: 28px;
+  border-radius: 50%;
+  border: 3px solid #bbb;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-right: 18px;
+  background: #fff;
+  cursor: pointer;
+  transition: border 0.2s;
+  font-size: 1.5rem;
+
+  flex-shrink: 0;
+  position: relative;
+}
+
+.checkbox.checked {
+  border-color: #3c206c;
+  color: #3c206c;
+}
+
+.checkbox.checked::after {
+  content: "✔";
+  font-size: 1.3rem;
+  position: absolute;
+  top: 2px;
+  left: 6px;
+}
+
+.todo-text {
+  flex: 1;
+  font-size: 1rem;
+  color: #333;
+
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.cerrar {
+  position: absolute;
+  right: 12px;
+  top: 50%;
+  transform: translateY(-50%);
+  color: #c0392b;
+  font-weight: bold;
+  font-size: 20px;
+  cursor: pointer;
+
+  transition: color 0.3s ease;
+}
+
+.cerrar:hover {
+  color: #e74c3c;
+}
+
+#info-editar {
+  margin-top: 20px;
+  font-size: 0.9rem;
+  color: #666;
+  text-align: center;
+
+}
+
+@media (max-width: 520px) {
+  .input-area {
+    flex-direction: column;
+  }
+  .input-area input[type="text"],
+  .input-area select,
+  .orden-btn {
+    flex: 1 1 100%;
+  }
+  .orden-btn {
+    margin-top: 10px;
+  }
+}
