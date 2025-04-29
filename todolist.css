@@ -57,7 +57,8 @@
       width: 7px;
     }
 
-    /* Style the close button */
+    
+    /* boton de cerrar */
     .close {
       position: absolute;
       right: 0;
@@ -70,7 +71,7 @@
       color: white;
     }
 
-    /* Style the header */
+    /* el header */
     .header {
       background-color: #fcb1ce;
       padding: 30px 40px;
@@ -78,14 +79,14 @@
       text-align: center;
     }
 
-    /* Clear floats after the header */
+    /* pseudoelemento, despues */
     .header:after {
       content: "";
       display: table;
       clear: both;
     }
 
-    /* Style the input */
+    /* input */
     input {
       border: none;
       border-radius: 5px;
@@ -93,7 +94,25 @@
       padding: 10px;
     }
 
-    /* Style the "Add" button */
+    /*  prioridad */
+label[for="prioridad-input"] {
+  font-weight: bold;
+  margin-left: 10px;
+  margin-right: 5px;
+  white-space: nowrap;
+}
+
+/*  prioridad */
+#prioridad-input {
+  width: 80px;
+  padding: 8px;
+  font-size: 16px;
+  border-radius: 5px;
+  border: 1px solid #ccc;
+  text-align: center;
+}
+
+    /* boton de anadir */
     .addBtn {
       padding: 10px;
       background: #d9d9d9;

@@ -29,7 +29,8 @@ listo.addEventListener('click', function (ev) {
 function nuevoItem() {
   var li = document.createElement("li");
   var inputValor = document.getElementById("toDo-input").value;
-  var t = document.createTextNode(inputValor);
+  var prioridadValor = document.getElementById("prioridad-input").value;
+  var t = document.createTextNode(inputValor+ " (" + prioridadValor + ")");
   li.appendChild(t);
   if (inputValor === '') {
     alert("Ingresar alguna tarea por hacer!");
